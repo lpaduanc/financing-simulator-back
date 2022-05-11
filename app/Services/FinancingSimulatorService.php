@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Jobs\SimulationEmail;
+use App\Models\Simulation;
 use App\Repositories\FinancingSimulatorRepository;
 
 class FinancingSimulatorService
@@ -29,7 +31,7 @@ class FinancingSimulatorService
         $data['simulation'] = $this->store($data);
 
         if (!empty($data['email'])) {
-            $this->sendEmail($data['email']);
+            $this->sendEmail($data['simulation']);
         }
 
         return $this->mountDataToShowSimulation($data);
@@ -56,8 +58,8 @@ class FinancingSimulatorService
         return $this->financingSimulatorRepository->store($data);
     }
 
-    public function sendEmail(string $email)
+    public function sendEmail(Simulation $simulation)
     {
-
+        SimulationEmail::dispatch($simulation)->delay(now()->addSeconds('2'));
     }
 }
