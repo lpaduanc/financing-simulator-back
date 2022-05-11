@@ -20,3 +20,6 @@
 
 ### Run Server
     php artisan serve
+
+### Run queue
+    php artisan queue:work
