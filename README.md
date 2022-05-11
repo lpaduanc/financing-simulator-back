@@ -22,4 +22,5 @@
     php artisan serve
 
 ### Run queue
+    Altere o valor da chave QUEUE_CONNECTION para database no arquivo .env
     php artisan queue:work
