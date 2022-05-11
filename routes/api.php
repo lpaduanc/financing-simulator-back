@@ -1,19 +1,26 @@
 <?php
 
+use App\Http\Controllers\FinancingSimulatorController;
+use App\Http\Controllers\InstallmentsController;
+use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\VehiclesBrandController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::prefix('vehicles')
+    ->group(function(){
+        Route::get('/', [VehicleController::class, 'index'])->name('vehicle.index');
+        Route::get('/brand/{id}', [VehicleController::class, 'getbyBrandId'])->name('vehicle.getbyBrandId');
+        Route::get('/brand', [VehiclesBrandController::class, 'index'])->name('brand.index');
+    });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::prefix('simulator')
+    ->group(function(){
+        Route::post('/simulation', [FinancingSimulatorController::class, 'runSimulation'])
+            ->name('simulator.runSimulation');
+    });
+
+Route::prefix('installments')
+    ->group(function(){
+        Route::get('/', [InstallmentsController::class, 'index'])->name('installments.index');
+    });
