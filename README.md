@@ -17,3 +17,6 @@
     
 ### Seeder
     php artisan db:seed
+
+### Run Server
+    php artisan serve
